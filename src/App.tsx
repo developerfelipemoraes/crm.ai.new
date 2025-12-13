@@ -9,6 +9,7 @@ import { Dashboard } from '@/pages/Dashboard'
 import { Contacts } from '@/pages/Contacts'
 import { Companies } from '@/pages/Companies'
 import { Vehicles } from '@/pages/Vehicles'
+import { VehicleWizard } from '@/pages/VehicleWizard'
 import { Opportunities } from '@/pages/Opportunities'
 import { Tasks } from '@/pages/Tasks'
 import { ProtectedRoute } from '@/components/ProtectedRoute'
@@ -46,6 +47,7 @@ function App() {
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/companies" element={<Companies />} />
           <Route path="/vehicles" element={<Vehicles />} />
+          <Route path="/vehicles/new" element={<VehicleWizard />} />
           <Route path="/opportunities" element={<Opportunities />} />
           <Route path="/tasks" element={<Tasks />} />
         </Route>
