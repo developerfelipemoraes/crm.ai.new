@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/contexts/AuthContext'
@@ -5,9 +6,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 import { Contact } from '@/types/database'
+import { ContactWizard } from '@/components/wizards/ContactWizard'
 
 export function Contacts() {
   const { systemUser } = useAuth()
+  const [isWizardOpen, setIsWizardOpen] = useState(false)
 
   const { data: contacts, isLoading } = useQuery({
     queryKey: ['contacts', systemUser?.organization_id],
@@ -32,7 +35,7 @@ export function Contacts() {
           <h1 className="text-3xl font-bold">Contatos</h1>
           <p className="text-muted-foreground">Gestão de contatos pessoas físicas</p>
         </div>
-        <Button>
+        <Button onClick={() => setIsWizardOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />
           Novo Contato
         </Button>
@@ -68,6 +71,8 @@ export function Contacts() {
           )}
         </CardContent>
       </Card>
+
+      <ContactWizard open={isWizardOpen} onOpenChange={setIsWizardOpen} />
     </div>
   )
 }

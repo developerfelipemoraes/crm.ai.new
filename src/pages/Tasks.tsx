@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/contexts/AuthContext'
@@ -7,9 +8,11 @@ import { Plus } from 'lucide-react'
 import { Task } from '@/types/database'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { TaskWizard } from '@/components/wizards/TaskWizard'
 
 export function Tasks() {
   const { systemUser } = useAuth()
+  const [isWizardOpen, setIsWizardOpen] = useState(false)
 
   const { data: tasks, isLoading } = useQuery({
     queryKey: ['tasks', systemUser?.organization_id],
@@ -38,7 +41,7 @@ export function Tasks() {
           <h1 className="text-3xl font-bold">Tarefas</h1>
           <p className="text-muted-foreground">Gestão de tarefas e atividades</p>
         </div>
-        <Button>
+        <Button onClick={() => setIsWizardOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />
           Nova Tarefa
         </Button>
@@ -78,6 +81,8 @@ export function Tasks() {
           )}
         </CardContent>
       </Card>
+
+      <TaskWizard open={isWizardOpen} onOpenChange={setIsWizardOpen} />
     </div>
   )
 }

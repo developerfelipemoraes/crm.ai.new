@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/contexts/AuthContext'
@@ -5,9 +6,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 import { SalesOpportunity } from '@/types/database'
+import { OpportunityWizard } from '@/components/wizards/OpportunityWizard'
 
 export function Opportunities() {
   const { systemUser } = useAuth()
+  const [isWizardOpen, setIsWizardOpen] = useState(false)
 
   const { data: opportunities, isLoading } = useQuery({
     queryKey: ['opportunities', systemUser?.organization_id],
@@ -37,7 +40,7 @@ export function Opportunities() {
           <h1 className="text-3xl font-bold">Oportunidades</h1>
           <p className="text-muted-foreground">Pipeline de vendas</p>
         </div>
-        <Button>
+        <Button onClick={() => setIsWizardOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />
           Nova Oportunidade
         </Button>
@@ -77,6 +80,8 @@ export function Opportunities() {
           )}
         </CardContent>
       </Card>
+
+      <OpportunityWizard open={isWizardOpen} onOpenChange={setIsWizardOpen} />
     </div>
   )
 }

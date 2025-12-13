@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/contexts/AuthContext'
@@ -5,9 +6,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 import { Company } from '@/types/database'
+import { CompanyWizard } from '@/components/wizards/CompanyWizard'
 
 export function Companies() {
   const { systemUser } = useAuth()
+  const [isWizardOpen, setIsWizardOpen] = useState(false)
 
   const { data: companies, isLoading } = useQuery({
     queryKey: ['companies', systemUser?.organization_id],
@@ -32,7 +35,7 @@ export function Companies() {
           <h1 className="text-3xl font-bold">Empresas</h1>
           <p className="text-muted-foreground">Gestão de empresas pessoas jurídicas</p>
         </div>
-        <Button>
+        <Button onClick={() => setIsWizardOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />
           Nova Empresa
         </Button>
@@ -68,6 +71,8 @@ export function Companies() {
           )}
         </CardContent>
       </Card>
+
+      <CompanyWizard open={isWizardOpen} onOpenChange={setIsWizardOpen} />
     </div>
   )
 }

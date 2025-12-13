@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/contexts/AuthContext'
@@ -5,9 +6,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 import { Vehicle } from '@/types/database'
+import { VehicleWizard } from '@/components/wizards/VehicleWizard'
 
 export function Vehicles() {
   const { systemUser } = useAuth()
+  const [isWizardOpen, setIsWizardOpen] = useState(false)
 
   const { data: vehicles, isLoading } = useQuery({
     queryKey: ['vehicles', systemUser?.organization_id],
@@ -32,7 +35,7 @@ export function Vehicles() {
           <h1 className="text-3xl font-bold">Veículos</h1>
           <p className="text-muted-foreground">Gestão de veículos</p>
         </div>
-        <Button>
+        <Button onClick={() => setIsWizardOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />
           Novo Veículo
         </Button>
@@ -74,6 +77,8 @@ export function Vehicles() {
           )}
         </CardContent>
       </Card>
+
+      <VehicleWizard open={isWizardOpen} onOpenChange={setIsWizardOpen} />
     </div>
   )
 }
