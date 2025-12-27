@@ -1,0 +1,15 @@
+
+> bolt-crm-multiempresa@1.0.0 dev
+> vite
+
+
+  VITE v5.4.21  ready in 320 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+2:41:33 PM [vite] hmr update /src/App.tsx, /src/index.css
+2:42:16 PM [vite] hmr update /src/App.tsx, /src/index.css
+2:42:20 PM [vite] hmr update /src/pages/TestEmptyState.tsx, /src/index.css
+2:42:34 PM [vite] hmr update /src/pages/Vehicles.tsx, /src/index.css
+2:42:40 PM [vite] hmr update /src/pages/Companies.tsx, /src/index.css
+2:44:09 PM [vite] hmr update /src/components/ui/empty-state.tsx, /src/index.css

@@ -4,9 +4,10 @@ import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/contexts/AuthContext'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Plus } from 'lucide-react'
+import { Plus, Building2 } from 'lucide-react'
 import { Company } from '@/types/database'
 import { CompanyWizard } from '@/components/wizards/CompanyWizard'
+import { EmptyState } from '@/components/ui/empty-state'
 
 export function Companies() {
   const { systemUser } = useAuth()
@@ -67,7 +68,17 @@ export function Companies() {
               ))}
             </div>
           ) : (
-            <p className="text-muted-foreground">Nenhuma empresa encontrada.</p>
+            <EmptyState
+              icon={Building2}
+              title="Nenhuma empresa encontrada"
+              description="Você ainda não cadastrou nenhuma empresa. Comece adicionando a primeira."
+              action={
+                <Button onClick={() => setIsWizardOpen(true)}>
+                  <Plus className="mr-2 h-4 w-4" />
+                  Nova Empresa
+                </Button>
+              }
+            />
           )}
         </CardContent>
       </Card>

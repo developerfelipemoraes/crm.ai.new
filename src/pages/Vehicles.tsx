@@ -4,9 +4,10 @@ import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/contexts/AuthContext'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Plus } from 'lucide-react'
+import { Plus, CarFront } from 'lucide-react'
 import { Vehicle } from '@/types/database'
 import { VehicleWizard } from '@/components/wizards/VehicleWizard'
+import { EmptyState } from '@/components/ui/empty-state'
 
 export function Vehicles() {
   const { systemUser } = useAuth()
@@ -73,7 +74,17 @@ export function Vehicles() {
               ))}
             </div>
           ) : (
-            <p className="text-muted-foreground">Nenhum veículo encontrado.</p>
+            <EmptyState
+              icon={CarFront}
+              title="Nenhum veículo encontrado"
+              description="Você ainda não cadastrou nenhum veículo. Comece adicionando o primeiro."
+              action={
+                <Button onClick={() => setIsWizardOpen(true)}>
+                  <Plus className="mr-2 h-4 w-4" />
+                  Novo Veículo
+                </Button>
+              }
+            />
           )}
         </CardContent>
       </Card>
