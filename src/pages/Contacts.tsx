@@ -4,9 +4,10 @@ import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/contexts/AuthContext'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Plus } from 'lucide-react'
+import { Plus, Users } from 'lucide-react'
 import { Contact } from '@/types/database'
 import { ContactWizard } from '@/components/wizards/ContactWizard'
+import { EmptyState } from '@/components/ui/empty-state'
 
 export function Contacts() {
   const { systemUser } = useAuth()
@@ -67,7 +68,17 @@ export function Contacts() {
               ))}
             </div>
           ) : (
-            <p className="text-muted-foreground">Nenhum contato encontrado.</p>
+            <EmptyState
+              icon={Users}
+              title="Nenhum contato encontrado"
+              description="Você ainda não cadastrou nenhum contato. Comece adicionando o primeiro."
+              action={
+                <Button onClick={() => setIsWizardOpen(true)}>
+                  <Plus className="mr-2 h-4 w-4" />
+                  Novo Contato
+                </Button>
+              }
+            />
           )}
         </CardContent>
       </Card>
