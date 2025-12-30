@@ -24,6 +24,7 @@ import {
 import { Textarea } from '@/components/ui/textarea'
 import { Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
+import { brazilianStates } from '@/data/brazilian-states'
 
 const vehicleSchema = z.object({
   title: z.string().min(1, 'Título é obrigatório'),
@@ -307,12 +308,21 @@ export function VehicleWizard({ open, onOpenChange }: VehicleWizardProps) {
 
             <div className="space-y-2">
               <Label htmlFor="location_state">Estado *</Label>
-              <Input
-                id="location_state"
-                {...register('location_state')}
-                placeholder="SP"
-                maxLength={2}
-              />
+              <Select
+                onValueChange={(value) => setValue('location_state', value)}
+                defaultValue={watch('location_state')}
+              >
+                <SelectTrigger id="location_state">
+                  <SelectValue placeholder="UF" />
+                </SelectTrigger>
+                <SelectContent className="h-60">
+                  {brazilianStates.map((state) => (
+                    <SelectItem key={state.value} value={state.value}>
+                      {state.value}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               {errors.location_state && (
                 <p className="text-sm text-red-500">{errors.location_state.message}</p>
               )}
