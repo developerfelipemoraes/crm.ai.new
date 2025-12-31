@@ -1,44 +1,74 @@
-import { supabase } from '@/lib/supabase'
+import { request } from './api'
 import { Vehicle } from '@/types/database'
 import { Paged, PaginationParams } from '@/types/pagination'
+import { SystemUser } from '@/types/database'
 
 interface GetVehiclesParams extends PaginationParams {
-  organizationId: string
+  user: SystemUser | null
   sortBy?: string
   sortOrder?: 'asc' | 'desc'
   companyId?: string
 }
 
+interface ApiResponse<T> {
+  Data: T[] | { items: T[], total?: number, count?: number }
+  count?: number
+  total?: number
+}
+
 export async function getVehicles({
   page,
   limit,
-  organizationId,
-  sortBy = 'created_at',
+  user,
+  sortBy = 'createdAt',
   sortOrder = 'desc',
-  companyId
 }: GetVehiclesParams): Promise<Paged<Vehicle>> {
-  const from = (page - 1) * limit
-  const to = from + limit - 1
 
-  let query = supabase
-    .from('vehicles')
-    .select('*', { count: 'exact' })
-    .eq('organization_id', organizationId)
-    .order(sortBy, { ascending: sortOrder === 'asc' })
-    .range(from, to)
-
-  if (companyId) {
-    query = query.eq('company_id', companyId)
+  if (user) {
+      console.log('Usuário para autenticação de veículos:', user.email);
+      console.log('Usuário para autenticação de veículos:', user.organization_id);
   }
 
-  const { data, count, error } = await query
-
-  if (error) {
-    throw error
+  const endpoint = '/vehicles'
+  const params: Record<string, string | number> = {
+    page,
+    limit,
+    sortBy,
+    sortOrder
   }
+
+  // Add company filter logic if needed, similar to original service
+  // user.role !== 'super_admin' check based on snippet
+  if (user && user.role !== 'super_admin' && user.organization_id) {
+    params.companyId = user.organization_id
+  }
+
+  const response = await request<ApiResponse<Vehicle>>(endpoint, {
+    params
+  })
+
+  const data = response.Data
+
+  // Handle various response structures
+  let items: Vehicle[] = []
+  let count = 0
+
+  if (Array.isArray(data)) {
+    items = data
+    count = data.length // If array, we might not have total count unless in headers or separate field
+    if (response.count !== undefined) count = response.count
+    if (response.total !== undefined) count = response.total
+  } else {
+    items = (data as any)?.items ?? []
+    count = (data as any)?.total ?? (data as any)?.count ?? items.length
+    if (response.count !== undefined) count = response.count
+    if (response.total !== undefined) count = response.total
+  }
+
+  console.log('Veiculos carregadas:', items);
 
   return {
-    data: (data as Vehicle[]) || [],
-    count: count || 0,
+    data: items,
+    count: count
   }
 }

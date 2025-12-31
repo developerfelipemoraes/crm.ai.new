@@ -20,7 +20,7 @@ export function Vehicles() {
       getVehicles({
         page,
         limit,
-        organizationId: systemUser?.organization_id!,
+        user: systemUser,
       }),
     enabled: !!systemUser?.organization_id,
     placeholderData: keepPreviousData,
