@@ -1,17 +1,22 @@
-import { LogOut, User } from 'lucide-react'
+import { useState } from 'react'
+import { LogOut, User, Loader2 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { Button } from './ui/button'
 import { toast } from 'sonner'
 
 export function Header() {
   const { systemUser, signOut } = useAuth()
+  const [isSigningOut, setIsSigningOut] = useState(false)
 
   const handleSignOut = async () => {
     try {
+      setIsSigningOut(true)
       await signOut()
       toast.success('Logout realizado com sucesso')
     } catch (error) {
       toast.error('Erro ao fazer logout')
+    } finally {
+      setIsSigningOut(false)
     }
   }
 
@@ -33,8 +38,14 @@ export function Header() {
           size="icon"
           onClick={handleSignOut}
           title="Sair"
+          aria-label="Sair do sistema"
+          disabled={isSigningOut}
         >
-          <LogOut className="h-5 w-5" />
+          {isSigningOut ? (
+            <Loader2 className="h-5 w-5 animate-spin" />
+          ) : (
+            <LogOut className="h-5 w-5" />
+          )}
         </Button>
       </div>
     </header>
