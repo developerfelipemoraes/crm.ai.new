@@ -72,6 +72,8 @@ export const WizardLayout: React.FC<WizardLayoutProps> = ({
                   className={`flex items-center ${step !== totalSteps ? 'flex-1' : ''}`}
                 >
                   <div
+                    aria-label={`Passo ${step} de ${totalSteps}`}
+                    aria-current={step === currentStep ? 'step' : undefined}
                     className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium transition-colors ${
                       step < currentStep
                         ? 'bg-green-500 text-white'
