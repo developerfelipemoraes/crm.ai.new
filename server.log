@@ -1,0 +1,12 @@
+
+> bolt-crm-multiempresa@1.0.0 dev
+> vite
+
+
+  VITE v5.4.21  ready in 319 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+2:37:01 PM [vite] hmr update /src/App.tsx, /src/index.css, /src/contexts/AuthContext.tsx, /src/pages/Contacts.tsx, /src/pages/Companies.tsx, /src/pages/Vehicles.tsx, /src/pages/Opportunities.tsx, /src/pages/Tasks.tsx, /src/pages/Dashboard.tsx, /src/components/wizards/ContactWizard.tsx, /src/components/wizards/OpportunityWizard.tsx, /src/components/wizards/VehicleWizard.tsx, /src/components/wizards/TaskWizard.tsx, /src/components/wizards/CompanyWizard.tsx
+2:37:29 PM [vite] hmr update /src/App.tsx, /src/index.css, /src/contexts/AuthContext.tsx, /src/pages/Contacts.tsx, /src/pages/Companies.tsx, /src/pages/Vehicles.tsx, /src/pages/Opportunities.tsx, /src/pages/Tasks.tsx, /src/pages/Dashboard.tsx, /src/components/wizards/ContactWizard.tsx, /src/components/wizards/OpportunityWizard.tsx, /src/components/wizards/VehicleWizard.tsx, /src/components/wizards/TaskWizard.tsx, /src/components/wizards/CompanyWizard.tsx
+2:38:57 PM [vite] hmr update /src/components/wizard-veiculos/WizardLayout.tsx, /src/index.css
