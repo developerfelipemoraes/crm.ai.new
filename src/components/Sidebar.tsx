@@ -5,7 +5,8 @@ import {
   Building2,
   Car,
   TrendingUp,
-  CheckSquare
+  CheckSquare,
+  Settings
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -16,6 +17,7 @@ const navigation = [
   { name: 'Veículos', href: '/vehicles', icon: Car },
   { name: 'Oportunidades', href: '/opportunities', icon: TrendingUp },
   { name: 'Tarefas', href: '/tasks', icon: CheckSquare },
+  { name: 'Modelos de Chassi', href: '/chassis-models', icon: Settings },
 ]
 
 export function Sidebar() {

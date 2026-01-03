@@ -150,3 +150,12 @@ export interface Task {
   opportunity?: SalesOpportunity
   assigned_user?: SystemUser
 }
+
+export interface ChassisModel {
+  id: string
+  organization_id: string
+  name: string
+  manufacturer: string
+  created_at: string
+  updated_at: string
+}
