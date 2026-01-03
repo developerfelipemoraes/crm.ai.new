@@ -60,37 +60,57 @@ export const WizardLayout: React.FC<WizardLayoutProps> = ({
               Etapa {currentStep} de {totalSteps}
             </Badge>
           </div>
-          <Progress value={progress} className="h-2" />
+          <Progress
+            value={progress}
+            className="h-2"
+            aria-label={`Progresso do cadastro: ${Math.round(progress)}% concluído`}
+          />
         </div>
 
         <Card className="shadow-lg">
           <CardHeader className="border-b bg-white">
-            <div className="flex items-center gap-2 overflow-x-auto pb-2">
-              {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step) => (
-                <div
-                  key={step}
-                  className={`flex items-center ${step !== totalSteps ? 'flex-1' : ''}`}
-                >
+            <div
+              className="flex items-center gap-2 overflow-x-auto pb-2"
+              role="list"
+              aria-label="Etapas do cadastro"
+            >
+              {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step) => {
+                const stepTitle = stepTitles[step - 1] || `Etapa ${step}`;
+                const isActive = step === currentStep;
+                const isCompleted = step < currentStep;
+
+                return (
                   <div
-                    className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium transition-colors ${
-                      step < currentStep
-                        ? 'bg-green-500 text-white'
-                        : step === currentStep
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-200 text-gray-600'
-                    }`}
+                    key={step}
+                    className={`flex items-center ${step !== totalSteps ? 'flex-1' : ''}`}
+                    role="listitem"
                   >
-                    {step}
-                  </div>
-                  {step !== totalSteps && (
                     <div
-                      className={`flex-1 h-1 mx-2 ${
-                        step < currentStep ? 'bg-green-500' : 'bg-gray-200'
+                      role="img"
+                      aria-label={`${isCompleted ? 'Concluído: ' : ''}${stepTitle}`}
+                      aria-current={isActive ? 'step' : undefined}
+                      title={stepTitle}
+                      className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium transition-colors cursor-help ${
+                        isCompleted
+                          ? 'bg-green-500 text-white'
+                          : isActive
+                          ? 'bg-blue-500 text-white'
+                          : 'bg-gray-200 text-gray-600'
                       }`}
-                    />
-                  )}
-                </div>
-              ))}
+                    >
+                      {step}
+                    </div>
+                    {step !== totalSteps && (
+                      <div
+                        aria-hidden="true"
+                        className={`flex-1 h-1 mx-2 ${
+                          isCompleted ? 'bg-green-500' : 'bg-gray-200'
+                        }`}
+                      />
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </CardHeader>
 
@@ -105,8 +125,9 @@ export const WizardLayout: React.FC<WizardLayoutProps> = ({
             disabled={isPreviousDisabled || currentStep === 1}
             variant="outline"
             className="gap-2"
+            aria-label="Voltar para a etapa anterior"
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-4 w-4" aria-hidden="true" />
             Anterior
           </Button>
 
@@ -116,8 +137,9 @@ export const WizardLayout: React.FC<WizardLayoutProps> = ({
                 onClick={onSaveDraft}
                 variant="outline"
                 className="gap-2"
+                aria-label="Salvar rascunho e continuar depois"
               >
-                <Save className="h-4 w-4" />
+                <Save className="h-4 w-4" aria-hidden="true" />
                 Salvar Rascunho
               </Button>
             )}
@@ -126,9 +148,10 @@ export const WizardLayout: React.FC<WizardLayoutProps> = ({
               onClick={onNext}
               disabled={isNextDisabled}
               className="gap-2"
+              aria-label={isLastStep ? 'Finalizar cadastro' : 'Ir para a próxima etapa'}
             >
               {isLastStep ? 'Finalizar' : 'Próximo'}
-              {!isLastStep && <ChevronRight className="h-4 w-4" />}
+              {!isLastStep && <ChevronRight className="h-4 w-4" aria-hidden="true" />}
             </Button>
           </div>
         </div>
