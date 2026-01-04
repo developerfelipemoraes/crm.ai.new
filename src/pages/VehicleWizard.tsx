@@ -252,7 +252,7 @@ export const VehicleWizard: React.FC = () => {
       onPrevious={handlePrevious}
       onNext={handleNext}
       onSaveDraft={handleSaveDraft}
-      isNextDisabled={!isStepValid()}
+      // isNextDisabled removed to allow validation feedback on click
     >
       {renderStep()}
     </WizardLayout>
