@@ -1,0 +1,12 @@
+
+> bolt-crm-multiempresa@1.0.0 dev /app
+> vite --port 5173
+
+
+  VITE v5.4.21  ready in 706 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+2:55:35 PM [vite] hmr update /src/pages/TestVehiclesWrapper.tsx, /src/index.css
+2:55:35 PM [vite] hmr update /src/App.tsx, /src/index.css
+2:55:39 PM [vite] hmr update /src/contexts/AuthContext.tsx, /src/index.css
