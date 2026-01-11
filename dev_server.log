@@ -1,0 +1,11 @@
+
+> bolt-crm-multiempresa@1.0.0 dev /app
+> vite --port 3000
+
+
+  VITE v5.4.21  ready in 325 ms
+
+  ➜  Local:   http://localhost:3000/
+  ➜  Network: use --host to expose
+2:43:48 PM [vite] .env changed, restarting server...
+2:43:48 PM [vite] server restarted.
