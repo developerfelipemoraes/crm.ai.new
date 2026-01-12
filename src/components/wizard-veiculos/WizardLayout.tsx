@@ -65,32 +65,46 @@ export const WizardLayout: React.FC<WizardLayoutProps> = ({
 
         <Card className="shadow-lg">
           <CardHeader className="border-b bg-white">
-            <div className="flex items-center gap-2 overflow-x-auto pb-2">
-              {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step) => (
-                <div
-                  key={step}
-                  className={`flex items-center ${step !== totalSteps ? 'flex-1' : ''}`}
-                >
+            <div
+              className="flex items-center gap-2 overflow-x-auto pb-2"
+              role="list"
+              aria-label="Progresso do formulário"
+            >
+              {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step) => {
+                const isActive = step === currentStep;
+                const isCompleted = step < currentStep;
+                const statusLabel = isCompleted ? 'Concluído' : isActive ? 'Em andamento' : 'Pendente';
+
+                return (
                   <div
-                    className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium transition-colors ${
-                      step < currentStep
-                        ? 'bg-green-500 text-white'
-                        : step === currentStep
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-200 text-gray-600'
-                    }`}
+                    key={step}
+                    className={`flex items-center ${step !== totalSteps ? 'flex-1' : ''}`}
+                    role="listitem"
                   >
-                    {step}
-                  </div>
-                  {step !== totalSteps && (
                     <div
-                      className={`flex-1 h-1 mx-2 ${
-                        step < currentStep ? 'bg-green-500' : 'bg-gray-200'
+                      aria-current={isActive ? 'step' : undefined}
+                      aria-label={`Passo ${step}: ${statusLabel}`}
+                      className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium transition-colors ${
+                        isCompleted
+                          ? 'bg-green-500 text-white'
+                          : isActive
+                          ? 'bg-blue-500 text-white'
+                          : 'bg-gray-200 text-gray-600'
                       }`}
-                    />
-                  )}
-                </div>
-              ))}
+                    >
+                      {step}
+                    </div>
+                    {step !== totalSteps && (
+                      <div
+                        aria-hidden="true"
+                        className={`flex-1 h-1 mx-2 ${
+                          isCompleted ? 'bg-green-500' : 'bg-gray-200'
+                        }`}
+                      />
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </CardHeader>
 
