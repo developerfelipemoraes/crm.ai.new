@@ -33,6 +33,7 @@ export function Header() {
           size="icon"
           onClick={handleSignOut}
           title="Sair"
+          aria-label="Sair"
         >
           <LogOut className="h-5 w-5" />
         </Button>
