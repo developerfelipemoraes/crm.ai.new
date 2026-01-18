@@ -65,33 +65,44 @@ export const WizardLayout: React.FC<WizardLayoutProps> = ({
 
         <Card className="shadow-lg">
           <CardHeader className="border-b bg-white">
-            <div className="flex items-center gap-2 overflow-x-auto pb-2">
-              {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step) => (
-                <div
-                  key={step}
-                  className={`flex items-center ${step !== totalSteps ? 'flex-1' : ''}`}
-                >
-                  <div
-                    className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium transition-colors ${
-                      step < currentStep
-                        ? 'bg-green-500 text-white'
-                        : step === currentStep
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-200 text-gray-600'
-                    }`}
+            <nav aria-label="Progresso do cadastro">
+              <ol className="flex items-center gap-2 overflow-x-auto pb-2">
+                {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step) => (
+                  <li
+                    key={step}
+                    className={`flex items-center ${step !== totalSteps ? 'flex-1' : ''}`}
+                    aria-current={step === currentStep ? 'step' : undefined}
                   >
-                    {step}
-                  </div>
-                  {step !== totalSteps && (
                     <div
-                      className={`flex-1 h-1 mx-2 ${
-                        step < currentStep ? 'bg-green-500' : 'bg-gray-200'
+                      className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium transition-colors ${
+                        step < currentStep
+                          ? 'bg-green-500 text-white'
+                          : step === currentStep
+                          ? 'bg-blue-500 text-white'
+                          : 'bg-gray-200 text-gray-600'
                       }`}
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
+                    >
+                      <span className="sr-only">
+                        {step < currentStep
+                          ? 'Passo concluído: '
+                          : step === currentStep
+                          ? 'Passo atual: '
+                          : 'Passo pendente: '}
+                      </span>
+                      {step}
+                    </div>
+                    {step !== totalSteps && (
+                      <div
+                        className={`flex-1 h-1 mx-2 ${
+                          step < currentStep ? 'bg-green-500' : 'bg-gray-200'
+                        }`}
+                        aria-hidden="true"
+                      />
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </nav>
           </CardHeader>
 
           <CardContent className="p-6">
