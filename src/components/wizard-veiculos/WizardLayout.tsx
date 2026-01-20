@@ -65,10 +65,16 @@ export const WizardLayout: React.FC<WizardLayoutProps> = ({
 
         <Card className="shadow-lg">
           <CardHeader className="border-b bg-white">
-            <div className="flex items-center gap-2 overflow-x-auto pb-2">
+            <div
+              className="flex items-center gap-2 overflow-x-auto pb-2"
+              role="list"
+              aria-label="Progresso do cadastro"
+            >
               {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step) => (
                 <div
                   key={step}
+                  role="listitem"
+                  aria-current={step === currentStep ? 'step' : undefined}
                   className={`flex items-center ${step !== totalSteps ? 'flex-1' : ''}`}
                 >
                   <div
@@ -80,6 +86,13 @@ export const WizardLayout: React.FC<WizardLayoutProps> = ({
                         : 'bg-gray-200 text-gray-600'
                     }`}
                   >
+                    <span className="sr-only">
+                      {step < currentStep
+                        ? 'Etapa concluída: '
+                        : step === currentStep
+                        ? 'Etapa atual: '
+                        : 'Próxima etapa: '}
+                    </span>
                     {step}
                   </div>
                   {step !== totalSteps && (
