@@ -65,33 +65,44 @@ export const WizardLayout: React.FC<WizardLayoutProps> = ({
 
         <Card className="shadow-lg">
           <CardHeader className="border-b bg-white">
-            <div className="flex items-center gap-2 overflow-x-auto pb-2">
-              {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step) => (
-                <div
-                  key={step}
-                  className={`flex items-center ${step !== totalSteps ? 'flex-1' : ''}`}
-                >
-                  <div
-                    className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium transition-colors ${
-                      step < currentStep
-                        ? 'bg-green-500 text-white'
-                        : step === currentStep
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-200 text-gray-600'
-                    }`}
-                  >
-                    {step}
-                  </div>
-                  {step !== totalSteps && (
-                    <div
-                      className={`flex-1 h-1 mx-2 ${
-                        step < currentStep ? 'bg-green-500' : 'bg-gray-200'
-                      }`}
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
+            <nav aria-label="Progresso do cadastro" className="overflow-x-auto pb-2">
+              <ol className="flex items-center gap-2 min-w-full">
+                {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step) => {
+                  const isCompleted = step < currentStep;
+                  const isCurrent = step === currentStep;
+                  const statusLabel = isCompleted ? 'Concluído' : isCurrent ? 'Atual' : 'Pendente';
+
+                  return (
+                    <li
+                      key={step}
+                      className={`flex items-center ${step !== totalSteps ? 'flex-1' : ''}`}
+                      aria-current={isCurrent ? 'step' : undefined}
+                    >
+                      <div
+                        className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium transition-colors ${
+                          isCompleted
+                            ? 'bg-green-500 text-white'
+                            : isCurrent
+                            ? 'bg-blue-500 text-white'
+                            : 'bg-gray-200 text-gray-600'
+                        }`}
+                      >
+                        <span className="sr-only">Passo {step}: {statusLabel}</span>
+                        <span aria-hidden="true">{step}</span>
+                      </div>
+                      {step !== totalSteps && (
+                        <div
+                          className={`flex-1 h-1 mx-2 ${
+                            isCompleted ? 'bg-green-500' : 'bg-gray-200'
+                          }`}
+                          aria-hidden="true"
+                        />
+                      )}
+                    </li>
+                  );
+                })}
+              </ol>
+            </nav>
           </CardHeader>
 
           <CardContent className="p-6">
