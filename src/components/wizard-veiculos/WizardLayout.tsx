@@ -8,6 +8,7 @@ import { ChevronLeft, ChevronRight, Save } from 'lucide-react';
 interface WizardLayoutProps {
   currentStep: number;
   totalSteps: number;
+  stepTitles?: string[];
   children: React.ReactNode;
   onPrevious?: () => void;
   onNext?: () => void;
@@ -16,23 +17,10 @@ interface WizardLayoutProps {
   isNextDisabled?: boolean;
 }
 
-const stepTitles = [
-  'Seleção de Categoria',
-  'Seleção de Tipo',
-  'Seleção de Subcategoria',
-  'Identificação do Produto',
-  'Descrição do Produto',
-  'Dados do Veículo',
-  'Informações do Chassi',
-  'Informações Secundárias',
-  'Configuração de Poltronas',
-  'Opcionais do Veículo',
-  'Localização do Produto'
-];
-
 export const WizardLayout: React.FC<WizardLayoutProps> = ({
   currentStep,
   totalSteps,
+  stepTitles = [],
   children,
   onPrevious,
   onNext,
@@ -65,33 +53,48 @@ export const WizardLayout: React.FC<WizardLayoutProps> = ({
 
         <Card className="shadow-lg">
           <CardHeader className="border-b bg-white">
-            <div className="flex items-center gap-2 overflow-x-auto pb-2">
-              {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step) => (
-                <div
-                  key={step}
-                  className={`flex items-center ${step !== totalSteps ? 'flex-1' : ''}`}
-                >
-                  <div
-                    className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium transition-colors ${
-                      step < currentStep
-                        ? 'bg-green-500 text-white'
-                        : step === currentStep
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-200 text-gray-600'
-                    }`}
+            <ol
+              className="flex items-center gap-2 overflow-x-auto pb-2 list-none"
+              aria-label="Progresso do cadastro"
+            >
+              {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step) => {
+                const title = stepTitles[step - 1] || `Etapa ${step}`;
+                let status = 'Pendente';
+                if (step < currentStep) status = 'Concluído';
+                else if (step === currentStep) status = 'Atual';
+
+                return (
+                  <li
+                    key={step}
+                    className={`flex items-center ${step !== totalSteps ? 'flex-1' : ''}`}
+                    aria-current={step === currentStep ? 'step' : undefined}
                   >
-                    {step}
-                  </div>
-                  {step !== totalSteps && (
                     <div
-                      className={`flex-1 h-1 mx-2 ${
-                        step < currentStep ? 'bg-green-500' : 'bg-gray-200'
+                      className={`relative flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium transition-colors ${
+                        step < currentStep
+                          ? 'bg-green-500 text-white'
+                          : step === currentStep
+                          ? 'bg-blue-500 text-white'
+                          : 'bg-gray-200 text-gray-600'
                       }`}
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
+                    >
+                      <span className="sr-only">
+                        {`Etapa ${step}: ${title} - ${status}`}
+                      </span>
+                      <span aria-hidden="true">{step}</span>
+                    </div>
+                    {step !== totalSteps && (
+                      <div
+                        className={`flex-1 h-1 mx-2 ${
+                          step < currentStep ? 'bg-green-500' : 'bg-gray-200'
+                        }`}
+                        aria-hidden="true"
+                      />
+                    )}
+                  </li>
+                );
+              })}
+            </ol>
           </CardHeader>
 
           <CardContent className="p-6">
