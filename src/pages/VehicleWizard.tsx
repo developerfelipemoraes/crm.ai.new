@@ -22,6 +22,20 @@ export const VehicleWizard: React.FC = () => {
 
   const totalSteps = 11;
 
+  const stepTitles = [
+    'Seleção de Categoria',
+    'Seleção de Tipo',
+    'Seleção de Subcategoria',
+    'Identificação do Produto',
+    'Descrição do Produto',
+    'Dados do Veículo',
+    'Informações do Chassi',
+    'Informações Secundárias',
+    'Configuração de Poltronas',
+    'Opcionais do Veículo',
+    'Localização do Produto'
+  ];
+
   const isStepValid = () => {
     switch (currentStep) {
       case 1:
@@ -249,10 +263,10 @@ export const VehicleWizard: React.FC = () => {
     <WizardLayout
       currentStep={currentStep}
       totalSteps={totalSteps}
+      stepTitles={stepTitles}
       onPrevious={handlePrevious}
       onNext={handleNext}
       onSaveDraft={handleSaveDraft}
-      isNextDisabled={!isStepValid()}
     >
       {renderStep()}
     </WizardLayout>
