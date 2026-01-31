@@ -39,29 +39,36 @@ export const CategorySelection: React.FC<CategorySelectionProps> = ({
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {categories.map((category) => (
-          <Card
+          <button
             key={category.id}
-            className={`cursor-pointer transition-all hover:shadow-lg ${
-              selectedCategory?.id === category.id
-                ? 'ring-2 ring-primary border-primary bg-primary/5'
-                : 'hover:border-primary/50'
-            }`}
+            type="button"
+            className="w-full text-left cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
             onClick={() => onCategorySelect(category)}
+            aria-pressed={selectedCategory?.id === category.id}
+            aria-label={`Selecionar categoria: ${category.name}`}
           >
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-lg">{category.name}</CardTitle>
-                {selectedCategory?.id === category.id && (
-                  <Check className="h-6 w-6 text-primary" />
-                )}
-              </div>
-            </CardHeader>
-            <CardContent>
-              <CardDescription>
-                {category.subcategories?.length || 0} subcategorias disponíveis
-              </CardDescription>
-            </CardContent>
-          </Card>
+            <Card
+              className={`transition-all hover:shadow-lg ${
+                selectedCategory?.id === category.id
+                  ? 'ring-2 ring-primary border-primary bg-primary/5'
+                  : 'hover:border-primary/50'
+              }`}
+            >
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-lg">{category.name}</CardTitle>
+                  {selectedCategory?.id === category.id && (
+                    <Check className="h-6 w-6 text-primary" />
+                  )}
+                </div>
+              </CardHeader>
+              <CardContent>
+                <CardDescription>
+                  {category.subcategories?.length || 0} subcategorias disponíveis
+                </CardDescription>
+              </CardContent>
+            </Card>
+          </button>
         ))}
       </div>
 
