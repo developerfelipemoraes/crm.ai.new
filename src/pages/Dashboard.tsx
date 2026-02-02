@@ -3,6 +3,7 @@ import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/contexts/AuthContext'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Users, Building2, Car, TrendingUp } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 export function Dashboard() {
   const { systemUser } = useAuth()
@@ -37,6 +38,7 @@ export function Dashboard() {
       icon: Users,
       color: 'text-blue-600',
       bgColor: 'bg-blue-100',
+      href: '/contacts',
     },
     {
       title: 'Empresas',
@@ -44,6 +46,7 @@ export function Dashboard() {
       icon: Building2,
       color: 'text-green-600',
       bgColor: 'bg-green-100',
+      href: '/companies',
     },
     {
       title: 'Veículos',
@@ -51,6 +54,7 @@ export function Dashboard() {
       icon: Car,
       color: 'text-purple-600',
       bgColor: 'bg-purple-100',
+      href: '/vehicles',
     },
     {
       title: 'Oportunidades Abertas',
@@ -58,6 +62,7 @@ export function Dashboard() {
       icon: TrendingUp,
       color: 'text-orange-600',
       bgColor: 'bg-orange-100',
+      href: '/opportunities',
     },
   ]
 
@@ -70,17 +75,19 @@ export function Dashboard() {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {cards.map((card) => (
-          <Card key={card.title}>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">{card.title}</CardTitle>
-              <div className={`rounded-full p-2 ${card.bgColor}`}>
-                <card.icon className={`h-4 w-4 ${card.color}`} />
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{card.value}</div>
-            </CardContent>
-          </Card>
+          <Link key={card.title} to={card.href} className="block">
+            <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">{card.title}</CardTitle>
+                <div className={`rounded-full p-2 ${card.bgColor}`}>
+                  <card.icon className={`h-4 w-4 ${card.color}`} />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{card.value}</div>
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </div>
 
