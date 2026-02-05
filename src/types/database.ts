@@ -71,6 +71,8 @@ export interface Vehicle {
   status: 'active' | 'pending' | 'inactive' | 'sold'
   media_files: Record<string, any>
   location: Record<string, any>
+  mileage?: number
+  available_quantity?: number
   created_at: string
   updated_at: string
 }

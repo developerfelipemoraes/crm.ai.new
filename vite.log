@@ -1,0 +1,13 @@
+
+> bolt-crm-multiempresa@1.0.0 dev /app
+> vite
+
+
+  VITE v5.4.21  ready in 365 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+10:18:25 AM [vite] hmr update /src/App.tsx, /src/index.css
+10:18:29 AM [vite] hmr update /src/pages/verify/VerifyVehicles.tsx, /src/index.css
+10:18:32 AM [vite] hmr update /src/contexts/AuthContext.tsx, /src/index.css
+ ELIFECYCLE  Command failed.
