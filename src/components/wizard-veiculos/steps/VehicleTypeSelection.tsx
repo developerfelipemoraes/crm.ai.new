@@ -24,33 +24,42 @@ export const VehicleTypeSelection: React.FC<VehicleTypeSelectionProps> = ({
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {vehicleTypes.map((type) => (
-          <Card
+          <button
             key={type.id}
-            className={`cursor-pointer transition-all hover:shadow-lg ${
-              selectedType?.id === type.id
-                ? 'ring-2 ring-primary border-primary bg-primary/5'
-                : 'hover:border-primary/50'
-            }`}
+            type="button"
+            className="w-full text-left"
             onClick={() => onTypeSelect(type)}
+            aria-pressed={selectedType?.id === type.id}
           >
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-4xl">{type.icon}</span>
-                  <CardTitle className="text-lg">{type.name}</CardTitle>
+            <Card
+              className={`cursor-pointer transition-all hover:shadow-lg ${
+                selectedType?.id === type.id
+                  ? 'ring-2 ring-primary border-primary bg-primary/5'
+                  : 'hover:border-primary/50'
+              }`}
+            >
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <span className="text-4xl">{type.icon}</span>
+                    <div className="font-semibold leading-none tracking-tight text-lg">
+                      {type.name}
+                    </div>
+                  </div>
+                  {selectedType?.id === type.id && (
+                    <Check className="h-6 w-6 text-primary" />
+                  )}
                 </div>
-                {selectedType?.id === type.id && (
-                  <Check className="h-6 w-6 text-primary" />
-                )}
-              </div>
-            </CardHeader>
-            <CardContent>
-              <CardDescription>
-                {type.categories?.length || 0}{' '}
-                {type.categories?.length === 1 ? 'categoria' : 'categorias'} disponíveis
-              </CardDescription>
-            </CardContent>
-          </Card>
+              </CardHeader>
+              <CardContent>
+                <CardDescription>
+                  {type.categories?.length || 0}{' '}
+                  {type.categories?.length === 1 ? 'categoria' : 'categorias'}{' '}
+                  disponíveis
+                </CardDescription>
+              </CardContent>
+            </Card>
+          </button>
         ))}
       </div>
 
